@@ -18,7 +18,7 @@ jobs:
           python-version: '3.x'
           
       - name: Install linters
-        run: pip install flake8 pylint
+        run: pip install flake8 pylint Pillow numpy
           
       - name: Lint with flake8
         run: flake8 filter.py
