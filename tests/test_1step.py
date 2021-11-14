@@ -11,6 +11,7 @@ def test_1_1():
     # в результате выполнения модуля должен сохраниться файл res.jpg
     result = Image.open("res.jpg")  # прочитаем его
     correct = Image.open("tests/out/1out.jpg")  # прочитаем файл верного результата
+                                                # для тестирования на Windows - поменять путь на tests/outWin
 
     diff = ImageChops.difference(correct, result)  # сравним эти два файла
     assert not diff.getbbox()  # получим результат сравнения True или False
