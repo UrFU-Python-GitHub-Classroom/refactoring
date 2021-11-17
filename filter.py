@@ -1,27 +1,25 @@
 from PIL import Image
 import numpy as np
-img = Image.open("img2.jpg")
-arr = np.array(img)
-a = len(arr)
-a1 = len(arr[1])
-i = 0
-while i < a:
-    j = 0
-    while j < a1:
-        s = 0
-        for n in range(i, i + 10):
-            for n1 in range(j, j + 10):
-                n2 = int(arr[n][n1][0])
-                n3 = int(arr[n][n1][1])
-                n4 = int(arr[n][n1][2])
-                s += (n2 + n3 + n4) // 3
-        s = int(s // 100)
-        for n in range(i, i + 10):
-            for n1 in range(j, j + 10):
-                arr[n][n1][0] = int(s // 50) * 50
-                arr[n][n1][1] = int(s // 50) * 50
-                arr[n][n1][2] = int(s // 50) * 50
-        j = j + 10
-    i = i + 10
-res = Image.fromarray(arr)
-res.save('res.jpg')
+
+
+def pixel_brightness(arr, b_s, gr, i, j):
+    brightness = np.sum(arr[i: i + b_s, j: j + b_s]) // (b_s * b_s * 3)
+    brightness -= brightness % gr
+    return brightness
+
+
+def transform_to_mosaic(arr, b_s, gr):
+    for i in range(0, len(arr), b_s):
+        for j in range(0, len(arr[1]), b_s):
+            brightness = pixel_brightness(arr, b_s, gr, i, j)
+            arr[i: i + b_s, j: j + b_s] = np.full(3, brightness)
+
+
+def convert_image_to_mosaic(img_in="img2.jpg", img_out="res.jpg", block_size=10, gradation_step=50):
+    img = Image.open(img_in)
+    img_arr = np.array(img)
+    transform_to_mosaic(img_arr, block_size, gradation_step)
+    res = Image.fromarray(img_arr)
+    res.save(img_out)
+
+convert_image_to_mosaic()

@@ -21,7 +21,7 @@ def test_2_1():
 
     # после выполнения с аргументами по умолчанию метод должен возвращать изображение res.jpg
     result = Image.open("res.jpg")
-    correct = Image.open("tests/out/1out.jpg")  # сравниваем с верным изображением по умолчанию
+    correct = Image.open("outWin/1out.jpg")  # сравниваем с верным изображением по умолчанию
                                                 # для тестирования на Windows - поменять путь на tests/outWin
 
     diff = ImageChops.difference(correct, result)
@@ -37,7 +37,7 @@ def test_2_2():
                                                         # 255 // 63 = 4 градации серого
 
     result = Image.open("res2.jpg")
-    correct = Image.open("tests/out/2out.jpg")
+    correct = Image.open("outWin/2out.jpg")
 
     diff = ImageChops.difference(correct, result)
     assert not diff.getbbox()
@@ -51,7 +51,12 @@ def test_2_3():
                                    gradation_step=1)
 
     result = Image.open("res3.jpg")
-    correct = Image.open("tests/out/3out.jpg")  # для тестирования на Windows - поменять путь на tests/outWin
+    correct = Image.open("outWin/3out.jpg")  # для тестирования на Windows - поменять путь на tests/outWin
 
     diff = ImageChops.difference(correct, result)
     assert not diff.getbbox()
+
+
+test_2_1()
+test_2_2()
+test_2_3()
